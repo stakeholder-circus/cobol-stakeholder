@@ -1,14 +1,12 @@
 # Toolchain
 
-This repository is scaffold-only for the COBOL HorizonLanguage target. It contains baseline coordination files only. No deterministic runtime validation is claimed.
+COBOL native validation uses GnuCOBOL on arm64 macOS.
 
-## Horizon target
+## Proven commands
 
-- Language id: cobol
-- Display name: COBOL
-- Horizon status: planned
-- Target class: parity-target
-- Repository: cobol-stakeholder
-## Scaffold scope
+- `cobc --version`
+- `cobc -x -free -o bin/stakeholder src/stakeholder.cob`
+- `make compiler-proof`
+- `make test`
 
-Toolchain status: scaffold-only. No compiler, interpreter, formatter, package manager, test runner, or deterministic runtime validation has been selected or proven.
+Toolchain source: Homebrew bottled `gnucobol` 3.2_1 plus `berkeley-db` and `json-c`. Docker, Nix, and COBOL package managers are not required for the current deterministic first tranche.
