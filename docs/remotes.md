@@ -1,14 +1,8 @@
 # Remotes
 
-This repository is scaffold-only for the COBOL HorizonLanguage target. It contains baseline coordination files only. No deterministic runtime validation is claimed.
+Canonical repository: git@github.com:stakeholder-circus/cobol-stakeholder.git.
 
-## Horizon target
-
-- Language id: cobol
-- Display name: COBOL
-- Horizon status: planned
-- Target class: parity-target
-- Repository: cobol-stakeholder
-## Scaffold scope
-
-Expected origin: git@github.com:stakeholder-circus/<repo>.git, where <repo> is the scaffold-only target repository name. Remote presence alone does not prove runtime validation.
+- Default branch: main.
+- Work happens on non-default topic branches.
+- Pull requests must pass bound native, Docker, SAST, dependency, actionlint, contract, and workflow-security gates.
+- Remote presence alone does not prove parity; status is backed by repository tests and GitHub run evidence.

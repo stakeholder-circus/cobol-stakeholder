@@ -1,13 +1,34 @@
-name: Scaffold Docker Smoke
-
+name: docker-smoke
 on:
+  workflow_dispatch:
   push:
   pull_request:
-
+permissions:
+  contents: read
 jobs:
-  scaffold:
+  docker-smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Scaffold-only status
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: docker build -t cobol-stakeholder .
+      - name: Registry and representative family smokes
         run: |
-          echo "scaffold-only Docker smoke placeholder; no deterministic runtime validation is claimed"
+          docker run --rm cobol-stakeholder --list-values > list-values.json
+          grep -F '"code-analyzer"' list-values.json
+          grep -F '"platform-engineering"' list-values.json
+          docker run --rm cobol-stakeholder --output-format json --focus-family code_analyzer --seed 123 > classic.json
+          grep -F '"rendererKey":"classic-six.code_analyzer"' classic.json
+          docker run --rm cobol-stakeholder --output-format json --focus-family platform_engineering --seed 8675309 > modern-a.json
+          docker run --rm cobol-stakeholder --output-format json --focus-family platform_engineering --seed 8675309 > modern-b.json
+          diff -u modern-a.json modern-b.json
+          grep -F '"tranche":"modern-core"' modern-a.json
+      - name: Experimental provider fails fast
+        run: |
+          if docker run --rm cobol-stakeholder --experimental-provider openai >provider.out 2>provider.err; then
+            echo "experimental provider unexpectedly succeeded" >&2
+            exit 1
+          fi
+          grep -F "experimental provider" provider.err

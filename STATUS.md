@@ -1,19 +1,19 @@
 # cobol-stakeholder Status
 
 - Phase target: deterministic first tranche
-- Phase state: native-validated local tranche
-- Program state: local deterministic widening
-- Publication state: local only, no upstream tracking, no push
-- Current implementation: compiled GnuCOBOL runtime using paragraph table resolution and deterministic rendering without package dependencies
+- Phase state: implemented; native and Docker validation are mandatory CI gates
+- Program state: published deterministic widening
+- Publication state: public GitHub repository on main
+- Current implementation: compiled GnuCOBOL runtime using paragraph-table resolution and deterministic rendering without package dependencies
 
 ## Evidence
 
-- `python3 scripts/validate_scaffold.py`
-- `make compiler-proof`
-- `make test`
+- python3 scripts/validate_scaffold.py
+- make compiler-proof
+- make analyze
+- make test
+- GitHub ci-native, docker-smoke, sast, actionlint, dependency-review, and security-analysis
 
 ## Open
 
-- Docker validation is deferred for M1 resource safety.
-- Full live-provider/runtime support is deferred to the second-pass provider rollout wave.
-- Publication remains blocked by the local-only policy for horizon scaffold and small-tranche work.
+- Full live-provider/runtime support is deferred to the second-pass provider rollout.
