@@ -1,12 +1,18 @@
 # Toolchain
 
-COBOL native validation uses GnuCOBOL on arm64 macOS.
+COBOL validation uses GnuCOBOL.
 
-## Proven commands
+## Sources
 
-- `cobc --version`
-- `cobc -x -free -o bin/stakeholder src/stakeholder.cob`
-- `make compiler-proof`
-- `make test`
+- macOS native feedback: Homebrew gnucobol.
+- GitHub native and SAST: Ubuntu 24.04 gnucobol3.
+- Portable runtime gate: Ubuntu 24.04 multi-stage Docker build with libcob4 in the non-root final image.
+- Nix: repository development-shell policy only; GitHub and Docker remain the release evidence.
 
-Toolchain source: Homebrew bottled `gnucobol` 3.2_1 plus `berkeley-db` and `json-c`. Docker, Nix, and COBOL package managers are not required for the current deterministic first tranche.
+## Commands
+
+- cobc --version
+- make analyze
+- make test
+- docker build -t cobol-stakeholder .
+- docker run --rm cobol-stakeholder --list-values
